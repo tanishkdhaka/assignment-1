@@ -1,0 +1,45 @@
+{
+  "target": "Part-1A initial generation",
+  "checkedAt": "2026-11-10T21:50:09Z",
+  "staticPassed": false,
+  "dynamicPassed": false,
+  "passed": false,
+  "findings": [
+    {
+      "code": "LINT_UNUSED_IMPORT",
+      "file": "src/cart/models.py:5",
+      "message": "dataclasses.field imported but unused (F401)",
+      "requirement": "P-02"
+    },
+    {
+      "code": "LINT_TYPE_ANNOTATION_QUOTE",
+      "file": "src/cart/engine.py:225",
+      "message": "Remove quotes from type annotation Cart (UP037)",
+      "requirement": "P-02"
+    },
+    {
+      "code": "LINT_ENUM_MODERNIZATION",
+      "file": "src/cart/models.py:10,20",
+      "message": "ErrorCode and DiscountType should inherit from StrEnum in Python 3.11+ (UP042)",
+      "requirement": "P-02"
+    },
+    {
+      "code": "LINT_TEST_NAMING_CONVENTION",
+      "file": "tests/test_engine.py, tests/test_persistence.py",
+      "message": "Function names test_AC_* contain uppercase letters violating N802",
+      "requirement": "P-02"
+    },
+    {
+      "code": "DYNAMIC_MODULE_NOT_FOUND",
+      "file": "tests/conftest.py:5",
+      "message": "ModuleNotFoundError: No module named 'cart'. pythonpath not configured in pytest configuration.",
+      "requirement": "P-04"
+    }
+  ],
+  "testExecution": {
+    "passed": false,
+    "exitCode": 4,
+    "stdout": "",
+    "stderr": "ImportError while loading conftest '/Users/tanni/.../tests/conftest.py': ModuleNotFoundError: No module named 'cart'"
+  }
+}

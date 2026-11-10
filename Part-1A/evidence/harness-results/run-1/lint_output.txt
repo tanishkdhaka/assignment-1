@@ -1,0 +1,367 @@
+UP037 [*] Remove quotes from type annotation
+   --> src/cart/engine.py:225:10
+    |
+223 |         data: dict[str, Any],
+224 |         catalog: dict[str, Discount] | None = None,
+225 |     ) -> "Cart":
+    |          ^^^^^^
+226 |         """Restore a Cart from a serialised dict (AC-016)."""
+227 |         cart = cls(catalog=catalog, tax_rate=data["tax_rate"])
+    |
+help: Remove quotes
+    |
+224 |         catalog: dict[str, Discount] | None = None,
+    -     ) -> "Cart":
+225 +     ) -> Cart:
+226 |         """Restore a Cart from a serialised dict (AC-016)."""
+    |
+
+F401 [*] `dataclasses.field` imported but unused
+ --> src/cart/models.py:5:36
+  |
+3 | from __future__ import annotations
+4 |
+5 | from dataclasses import dataclass, field
+  |                                    ^^^^^
+6 | from enum import Enum
+7 | from typing import Any
+  |
+help: Remove unused import: `dataclasses.field`
+  |
+4 |
+  - from dataclasses import dataclass, field
+5 + from dataclasses import dataclass
+6 | from enum import Enum
+  |
+
+UP042 Class ErrorCode inherits from both `str` and `enum.Enum`
+  --> src/cart/models.py:10:7
+   |
+10 | class ErrorCode(str, Enum):
+   |       ^^^^^^^^^
+11 |     """Structured error codes returned by Cart operations."""
+   |
+help: Inherit from `enum.StrEnum`
+   |
+5  | from dataclasses import dataclass, field
+   - from enum import Enum
+6  + from enum import Enum, StrEnum
+7  | from typing import Any
+8  |
+9  |
+   - class ErrorCode(str, Enum):
+10 + class ErrorCode(StrEnum):
+11 |     """Structured error codes returned by Cart operations."""
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP042 Class DiscountType inherits from both `str` and `enum.Enum`
+  --> src/cart/models.py:20:7
+   |
+20 | class DiscountType(str, Enum):
+   |       ^^^^^^^^^^^^
+21 |     """Types of discount supported."""
+   |
+help: Inherit from `enum.StrEnum`
+   |
+5  | from dataclasses import dataclass, field
+   - from enum import Enum
+6  + from enum import Enum, StrEnum
+7  | from typing import Any
+--------------------------------------------------------------------------------
+19 |
+   - class DiscountType(str, Enum):
+20 + class DiscountType(StrEnum):
+21 |     """Types of discount supported."""
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+F401 [*] `pytest` imported but unused
+  --> tests/test_engine.py:8:8
+   |
+ 6 | """
+ 7 |
+ 8 | import pytest
+   |        ^^^^^^
+ 9 |
+10 | from cart.engine import Cart
+   |
+help: Remove unused import: `pytest`
+  |
+7 |
+  - import pytest
+8 |
+  |
+
+N802 Function name `test_AC_001_add_valid_item` should be lowercase
+  --> tests/test_engine.py:18:5
+   |
+18 | def test_AC_001_add_valid_item(cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 |     result = cart.add_item("WIDGET", "Blue Widget", 9.99, 1)
+20 |     assert result.ok is True
+   |
+
+N802 Function name `test_AC_002_add_same_sku_accumulates` should be lowercase
+  --> tests/test_engine.py:34:5
+   |
+34 | def test_AC_002_add_same_sku_accumulates(cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+35 |     cart.add_item("WIDGET", "Blue Widget", 9.99, 2)
+36 |     result = cart.add_item("WIDGET", "Blue Widget", 9.99, 3)
+   |
+
+N802 Function name `test_AC_003_remove_more_than_available_clears_item` should be lowercase
+  --> tests/test_engine.py:47:5
+   |
+47 | def test_AC_003_remove_more_than_available_clears_item(cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+48 |     cart.add_item("WIDGET", "Blue Widget", 9.99, 2)
+49 |     result = cart.remove_item("WIDGET", 10)
+   |
+
+N802 Function name `test_AC_003_remove_exact_quantity_clears_item` should be lowercase
+  --> tests/test_engine.py:54:5
+   |
+54 | def test_AC_003_remove_exact_quantity_clears_item(cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+55 |     cart.add_item("WIDGET", "Blue Widget", 9.99, 2)
+56 |     result = cart.remove_item("WIDGET", 2)
+   |
+
+N802 Function name `test_AC_003_remove_partial_quantity_decrements` should be lowercase
+  --> tests/test_engine.py:61:5
+   |
+61 | def test_AC_003_remove_partial_quantity_decrements(cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+62 |     cart.add_item("WIDGET", "Blue Widget", 9.99, 5)
+63 |     result = cart.remove_item("WIDGET", 2)
+   |
+
+N802 Function name `test_AC_004_remove_nonexistent_sku` should be lowercase
+  --> tests/test_engine.py:73:5
+   |
+73 | def test_AC_004_remove_nonexistent_sku(cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+74 |     result = cart.remove_item("NOSUCHSKU", 1)
+75 |     assert result.ok is False
+   |
+
+N802 Function name `test_AC_005_percentage_discount` should be lowercase
+  --> tests/test_engine.py:84:5
+   |
+84 | def test_AC_005_percentage_discount(zero_tax_cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+85 |     zero_tax_cart.add_item("WIDGET", "Blue Widget", 9.99, 2)
+86 |     result = zero_tax_cart.apply_discount("SAVE10")
+   |
+
+N802 Function name `test_AC_005_percentage_25_percent` should be lowercase
+  --> tests/test_engine.py:93:5
+   |
+93 | def test_AC_005_percentage_25_percent(zero_tax_cart: Cart) -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+94 |     zero_tax_cart.add_item("ITEM", "Item", 20.00, 1)
+95 |     zero_tax_cart.apply_discount("SAVE25")
+   |
+
+N802 Function name `test_AC_006_fixed_amount_discount` should be lowercase
+   --> tests/test_engine.py:107:5
+    |
+107 | def test_AC_006_fixed_amount_discount(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+108 |     zero_tax_cart.add_item("ITEM", "Item", 30.00, 1)
+109 |     result = zero_tax_cart.apply_discount("FLAT5")
+    |
+
+N802 Function name `test_AC_007_fixed_minimum_not_met` should be lowercase
+   --> tests/test_engine.py:120:5
+    |
+120 | def test_AC_007_fixed_minimum_not_met(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+121 |     cart.add_item("ITEM", "Item", 10.00, 1)  # subtotal £10, min £20
+122 |     result = cart.apply_discount("FLAT5")
+    |
+
+N802 Function name `test_AC_008_second_percentage_replaces_first` should be lowercase
+   --> tests/test_engine.py:132:5
+    |
+132 | def test_AC_008_second_percentage_replaces_first(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+133 |     zero_tax_cart.add_item("ITEM", "Item", 100.00, 1)
+134 |     zero_tax_cart.apply_discount("SAVE10")  # 10% → saves £10
+    |
+
+N802 Function name `test_AC_008_fixed_replaces_percentage` should be lowercase
+   --> tests/test_engine.py:142:5
+    |
+142 | def test_AC_008_fixed_replaces_percentage(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+143 |     zero_tax_cart.add_item("ITEM", "Item", 100.00, 1)
+144 |     zero_tax_cart.apply_discount("SAVE10")
+    |
+
+N802 Function name `test_AC_009_bogo_basic` should be lowercase
+   --> tests/test_engine.py:155:5
+    |
+155 | def test_AC_009_bogo_basic(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+156 |     zero_tax_cart.add_item("WIDGET", "Blue Widget", 10.00, 5)
+157 |     result = zero_tax_cart.apply_discount("BOGO2FOR1_WIDGET")
+    |
+
+N802 Function name `test_AC_009_bogo_exact_multiple` should be lowercase
+   --> tests/test_engine.py:164:5
+    |
+164 | def test_AC_009_bogo_exact_multiple(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+165 |     zero_tax_cart.add_item("WIDGET", "Blue Widget", 10.00, 4)
+166 |     zero_tax_cart.apply_discount("BOGO2FOR1_WIDGET")
+    |
+
+N802 Function name `test_AC_010_bogo_stacks_with_percentage` should be lowercase
+   --> tests/test_engine.py:176:5
+    |
+176 | def test_AC_010_bogo_stacks_with_percentage(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+177 |     zero_tax_cart.add_item("WIDGET", "Blue Widget", 10.00, 5)
+178 |     zero_tax_cart.apply_discount("SAVE10")  # 10% of 50 = 5
+    |
+
+N802 Function name `test_AC_011_tax_on_discounted_subtotal` should be lowercase
+   --> tests/test_engine.py:192:5
+    |
+192 | def test_AC_011_tax_on_discounted_subtotal(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+193 |     cart.add_item("ITEM", "Item", 100.00, 1)
+194 |     cart.apply_discount("SAVE10")  # saves 10.00; after discount 90.00
+    |
+
+N802 Function name `test_AC_011_tax_rounding` should be lowercase
+   --> tests/test_engine.py:200:5
+    |
+200 | def test_AC_011_tax_rounding(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^
+201 |     # subtotal_after_discounts = 19.99; 10% tax = 1.999 → rounds to 2.00
+202 |     cart.add_item("ITEM", "Item", 19.99, 1)
+    |
+
+N802 Function name `test_AC_012_empty_cart_all_zeros` should be lowercase
+   --> tests/test_engine.py:213:5
+    |
+213 | def test_AC_012_empty_cart_all_zeros(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+214 |     assert cart.subtotal == 0.00
+215 |     assert cart.discount_total == 0.00
+    |
+
+N802 Function name `test_AC_013_invalid_coupon` should be lowercase
+   --> tests/test_engine.py:225:5
+    |
+225 | def test_AC_013_invalid_coupon(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+226 |     result = cart.apply_discount("NOSUCHCODE")
+227 |     assert result.ok is False
+    |
+
+N802 Function name `test_AC_014_invalid_price_zero` should be lowercase
+   --> tests/test_engine.py:236:5
+    |
+236 | def test_AC_014_invalid_price_zero(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+237 |     result = cart.add_item("SKU1", "Item", 0.0, 1)
+238 |     assert result.ok is False
+    |
+
+N802 Function name `test_AC_014_invalid_price_negative` should be lowercase
+   --> tests/test_engine.py:242:5
+    |
+242 | def test_AC_014_invalid_price_negative(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+243 |     result = cart.add_item("SKU1", "Item", -5.0, 1)
+244 |     assert result.ok is False
+    |
+
+N802 Function name `test_AC_015_invalid_quantity_zero` should be lowercase
+   --> tests/test_engine.py:253:5
+    |
+253 | def test_AC_015_invalid_quantity_zero(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+254 |     result = cart.add_item("SKU1", "Item", 10.00, 0)
+255 |     assert result.ok is False
+    |
+
+N802 Function name `test_AC_015_invalid_quantity_negative` should be lowercase
+   --> tests/test_engine.py:259:5
+    |
+259 | def test_AC_015_invalid_quantity_negative(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+260 |     result = cart.add_item("SKU1", "Item", 10.00, -3)
+261 |     assert result.ok is False
+    |
+
+N802 Function name `test_AC_017_clear_removes_items_and_discounts` should be lowercase
+   --> tests/test_engine.py:270:5
+    |
+270 | def test_AC_017_clear_removes_items_and_discounts(cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+271 |     cart.add_item("WIDGET", "Widget", 10.00, 3)
+272 |     cart.apply_discount("SAVE10")
+    |
+
+N802 Function name `test_AC_018_fixed_discount_at_exact_minimum` should be lowercase
+   --> tests/test_engine.py:285:5
+    |
+285 | def test_AC_018_fixed_discount_at_exact_minimum(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+286 |     zero_tax_cart.add_item("ITEM", "Item", 20.00, 1)  # exactly at minimum
+287 |     result = zero_tax_cart.apply_discount("FLAT5")
+    |
+
+N802 Function name `test_AC_019_bogo_below_threshold` should be lowercase
+   --> tests/test_engine.py:297:5
+    |
+297 | def test_AC_019_bogo_below_threshold(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+298 |     zero_tax_cart.add_item("WIDGET", "Blue Widget", 10.00, 1)
+299 |     result = zero_tax_cart.apply_discount("BOGO2FOR1_WIDGET")
+    |
+
+N802 Function name `test_AC_020_total_cannot_be_negative` should be lowercase
+   --> tests/test_engine.py:309:5
+    |
+309 | def test_AC_020_total_cannot_be_negative(zero_tax_cart: Cart) -> None:
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+310 |     zero_tax_cart.add_item("ITEM", "Item", 10.00, 1)
+311 |     zero_tax_cart.apply_discount("FLAT50")  # £50 off, no min; would go negative
+    |
+
+N802 Function name `test_AC_016_round_trip_preserves_items` should be lowercase
+  --> tests/test_persistence.py:36:5
+   |
+36 | def test_AC_016_round_trip_preserves_items() -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+37 |     original = _make_cart()
+38 |     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+   |
+
+N802 Function name `test_AC_016_saved_file_is_valid_json` should be lowercase
+  --> tests/test_persistence.py:53:5
+   |
+53 | def test_AC_016_saved_file_is_valid_json() -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+54 |     original = _make_cart()
+55 |     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+   |
+
+N802 Function name `test_AC_016_restored_cart_matches_items` should be lowercase
+  --> tests/test_persistence.py:65:5
+   |
+65 | def test_AC_016_restored_cart_matches_items() -> None:
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+66 |     original = _make_cart()
+67 |     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+   |
+
+Found 35 errors.
+[*] 3 fixable with `--fix` (2 unsafe fixes available with `--fix --unsafe-fixes`).

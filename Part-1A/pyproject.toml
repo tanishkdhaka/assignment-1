@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cart"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "Shopping Cart & Discount Engine — SDD Assignment Part 1A"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4"]
+ignore = ["S101"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-v --tb=short"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.9",
+  "bandit[toml]>=1.8",
+]
