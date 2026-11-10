@@ -4,7 +4,7 @@
 **Student Name:** [Your Name]  
 **Student ID:** [Your ID]  
 **Institutional Email:** [Your BITS Email]  
-**GitHub Repository:** [Your Public GitHub Repository URL]  
+**GitHub Repository:** https://github.com/tanishkdhaka/assignment-1  
 **Demonstration Video:** [Your Google Drive / OneDrive Video URL — Shared with all BITS IDs]  
 
 ---
