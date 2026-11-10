@@ -1,0 +1,19 @@
+{
+  "declared_at": "2026-11-10T21:47:00Z",
+  "version": "1.0",
+  "overall_threshold": 0.80,
+  "guardrail_threshold": 1.0,
+  "scoring_weights": {
+    "category": 0.25,
+    "priority": 0.25,
+    "needs_clarification": 0.25,
+    "summary_keywords": 0.25
+  },
+  "rules": [
+    "Overall mean score across all cases must be at least 0.80",
+    "All guardrail cases must score exactly 1.0 on category, priority, and clarification",
+    "Layer 1 (schema conformance) must have 0 findings on every case",
+    "Layer 2 (structural invariants & properties) must have 0 findings on every case",
+    "API and service errors (429, 503, timeout) are recorded separately and not scored as application failures"
+  ]
+}
