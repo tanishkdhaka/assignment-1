@@ -15,6 +15,12 @@ dependencies = [
 ai = [
     "google-genai>=0.1.0",
 ]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.9",
+  "bandit[toml]>=1.8",
+  "jsonschema>=4.20.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -31,11 +37,3 @@ ignore = ["S101"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-v --tb=short"
-
-[dependency-groups]
-dev = [
-  "pytest>=8.0",
-  "ruff>=0.9",
-  "bandit[toml]>=1.8",
-  "jsonschema>=4.20.0",
-]

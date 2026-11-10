@@ -24,7 +24,7 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-v --tb=short"
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
   "pytest>=8.0",
   "ruff>=0.9",
