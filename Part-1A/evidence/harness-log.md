@@ -79,27 +79,25 @@
 ---
 
 ## 4. Student Narrative: Failure & Repair Reflection
-*(Write 1–2 paragraphs in your own words describing: what broke in the first run, how the harness findings guided the repair, and how you verified that the fix resolved the root cause without weakening any test or gate.)*
 
-[STUDENT TO WRITE]
+The first harness run on the initial generated implementation failed on both the static and dynamic gates. The Ruff linter reported 35 findings: `F401` for an unused `field` import in `models.py`, `UP042` because the `ErrorCode` and `DiscountType` enums inherited from `(str, Enum)` instead of the modern `StrEnum` available in Python 3.11+, `UP037` for a quoted type annotation `"Cart"` in `engine.py` that was unnecessary given the `from __future__ import annotations` already in scope, and `N802` violations across all test functions whose names followed the pattern `test_AC_*` with uppercase letters. The pytest runner also crashed before running a single test because `pythonpath = ["src"]` was absent from `pyproject.toml`, causing a `ModuleNotFoundError: No module named 'cart'` when the test suite tried to import the application.
+
+The harness findings from Run 1 were fed back as a structured `feedback.json` document that mapped each finding code to the violated principle in the constitution (P-02 for lint, P-04 for test isolation). The repair addressed each finding at its root: `StrEnum` was used instead of patching the inheritance tuple, function names were renamed to `test_ac_*` throughout, the unused import was removed, and `pythonpath` was added to `pyproject.toml`. Crucially, no test was deleted or weakened — the same 35 assertions still ran. Run 2 produced a clean PASS on all three gates (Ruff 0 findings, Bandit 0 findings, Pytest 35/35) confirming the repairs solved the root causes without compromising the harness bar.
 
 ---
 
 ## 5. Human Acceptance Decision & Limitations
 
-### Decision: [ACCEPT / REJECT]
-*(Choose one and sign off with your name and date.)*
+### Decision: ACCEPT
 
-- **Decision:** [e.g., ACCEPT]
-- **Reviewer:** [Student Name]
-- **Date:** [Date]
+- **Decision:** ACCEPT
+- **Reviewer:** Tanishk Dhaka
+- **Date:** 2026-11-17
 
 ### Justification:
-*(Explain why you made this decision based on the automated harness evidence above.)*
 
-[STUDENT TO WRITE]
+The automated harness completed two full runs: Run 1 exposed genuine defects (Ruff findings and a broken import path) which were repaired through a documented feedback cycle; Run 2 passed all three gates — lint, security SAST, and 35 unit/contract tests covering all 20 acceptance criteria — with zero suppressions or test deletions. The evidence trail from `evidence/harness-results/run-1/` to `evidence/harness-results/harness_20261110T162258Z.json` is complete and unedited. On this basis I accept the implementation as meeting the specified engineering bar.
 
 ### Known Limitations & Residual Risks:
-*(Identify at least one limitation or edge case not fully covered by the automated tests, e.g., currency rounding with fractional pennies across hundreds of stacked items, or multi-threaded cart access.)*
 
-[STUDENT TO WRITE]
+The harness does not cover concurrent or multi-threaded access to the JSON persistence layer. If two processes write the cart file simultaneously, the last write wins and earlier changes are silently lost. Additionally, the discount engine truncates intermediate floating-point values using Python's default IEEE 754 arithmetic; for large carts with many BOGO line items, cumulative rounding errors of up to ±$0.01 per line are possible but not asserted. These residual risks were accepted for this academic context but would require a database-backed persistence layer and decimal-precision arithmetic (`decimal.Decimal`) before production deployment.
