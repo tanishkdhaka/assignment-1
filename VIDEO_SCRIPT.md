@@ -12,7 +12,7 @@
 ### Scene 1: Introduction (0:00 – 0:30)
 - **Visual:** Web browser showing your public GitHub repository page (`Assignment-1`).
 - **What to say (in your own words):**
-  > "Hello, this is [Your Name], Student ID [Your ID], presenting Assignment 1 for SEZG534: Spec-Driven Development and Harness Engineering. In this project, I developed two applications using the GitHub Spec Kit methodology: Part 1A is a deterministic Shopping Cart & Discount Engine validated with static and dynamic sensors, and Part 1B is a non-deterministic Support Ticket Triager evaluated against an independent 3-layer harness."
+  > "Hello, this is Tanishk Dhaka, Student ID 2026NS93035, presenting Assignment 1 for SEZG534: Spec-Driven Development and Harness Engineering. In this project, I developed two applications using the GitHub Spec Kit methodology: Part 1A is a deterministic Shopping Cart & Discount Engine validated with static and dynamic sensors, and Part 1B is a non-deterministic Support Ticket Triager evaluated against an independent 3-layer harness."
 
 ---
 

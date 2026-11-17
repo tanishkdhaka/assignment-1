@@ -1,9 +1,9 @@
 # BITS Pilani — SEZG534: AI-Augmented Software Development Life Cycle
 ## Assignment 1: Spec-Driven Development and Harness Engineering
 **Subtitle:** From specification-controlled coding agents to deterministic and non-deterministic validation  
-**Student Name:** [Your Name]  
-**Student ID:** [Your ID]  
-**Institutional Email:** [Your BITS Email]  
+**Student Name:** Tanishk Dhaka  
+**Student ID:** 2026NS93035  
+**Institutional Email:** 2026ns93035@wilp.bits-pilani.ac.in  
 **GitHub Repository:** https://github.com/tanishkdhaka/assignment-1  
 **Demonstration Video:** [Your Google Drive / OneDrive Video URL — Shared with all BITS IDs]  
 

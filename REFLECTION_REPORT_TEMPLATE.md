@@ -7,9 +7,9 @@
 
 ## Student & Submission Details
 
-- **Student Name:** [Enter Your Full Name]
-- **Student ID:** [Enter Your Student ID, e.g. 2024xx04xxx]
-- **Institutional Email:** [Enter Your BITS Email, e.g. f2024xxxx@pilani.bits-pilani.ac.in]
+- **Student Name:** Tanishk Dhaka
+- **Student ID:** 2026NS93035
+- **Institutional Email:** 2026ns93035@wilp.bits-pilani.ac.in
 - **GitHub Repository Link:** https://github.com/tanishkdhaka/assignment-1
 - **Demonstration Video Link:** [Enter Your Google Drive / OneDrive Video URL — Must be accessible to all BITS email IDs]
 
